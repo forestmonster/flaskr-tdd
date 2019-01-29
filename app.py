@@ -23,15 +23,7 @@ PASSWORD = "admin"
 app = Flask(__name__)
 app.config.from_object(__name__)
 
-# Connect to the database.
-def connect_db():
-    """Connects to the database."""
-    rv = sqlite3.connect(app.config["DATABASE"])
-    rv.row_factory = sqlite3.Row
-    return rv
-
-
-# Create the database.
+# Creates a database.
 def init_db():
     """Creates the database."""
     with app.app_context():
@@ -40,10 +32,16 @@ def init_db():
             db.cursor().executescript(f.read())
         db.commit()
 
+# Connect to the database.
+def connect_db():
+    """Connect to an existing database."""
+    rv = sqlite3.connect(app.config["DATABASE"])
+    rv.row_factory = sqlite3.Row
+    return rv
 
-# Open database connection.
+# Re-use an existing database if present.
 def get_db():
-    """Opens a connection to an existing database."""
+    """Re-use an existing database if present."""
     if not hasattr(g, "sqlite_db"):
         g.sqlite_db = connect_db()
     return g.sqlite_db
