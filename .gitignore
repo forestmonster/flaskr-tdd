@@ -105,3 +105,6 @@ venv.bak/
 
 # The SQLite3 database
 flaskr.db
+
+# Exuberant ctags
+tags
