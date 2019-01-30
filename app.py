@@ -25,7 +25,7 @@ app.config.from_object(__name__)
 
 
 @app.route("/")
-def show_entries():
+def index():
     """Select all entries from the database, then display them to the user."""
     db = get_db()
     cur = db.execute("SELECT * FROM entries ORDER BY id DESC")
