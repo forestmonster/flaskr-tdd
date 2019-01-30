@@ -42,7 +42,6 @@ def init_db():
         db.commit()
 
 
-# Connect to the database.
 def connect_db():
     """Connect to an existing database."""
     rv = sqlite3.connect(app.config["DATABASE"])
@@ -50,7 +49,6 @@ def connect_db():
     return rv
 
 
-# Re-use an existing database if present.
 def get_db():
     """Re-use an existing database if present."""
     if not hasattr(g, "sqlite_db"):
@@ -58,7 +56,6 @@ def get_db():
     return g.sqlite_db
 
 
-# Close database connection.
 @app.teardown_appcontext
 def close_db(error):
     """Close the database connection."""
