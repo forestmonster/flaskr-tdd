@@ -23,14 +23,16 @@ PASSWORD = "admin"
 app = Flask(__name__)
 app.config.from_object(__name__)
 
-# Creates a database.
+
+# Create a database.
 def init_db():
-    """Creates the database."""
+    """Create the database."""
     with app.app_context():
         db = get_db()
         with app.open_resource("schema.sql", mode="r") as f:
             db.cursor().executescript(f.read())
         db.commit()
+
 
 # Connect to the database.
 def connect_db():
@@ -38,6 +40,7 @@ def connect_db():
     rv = sqlite3.connect(app.config["DATABASE"])
     rv.row_factory = sqlite3.Row
     return rv
+
 
 # Re-use an existing database if present.
 def get_db():
@@ -50,7 +53,7 @@ def get_db():
 # Close database connection.
 @app.teardown_appcontext
 def close_db(error):
-    """Closes the database connection."""
+    """Close the database connection."""
     if hasattr(g, "sqlite_db"):
         g.sqlite_db.close()
 
