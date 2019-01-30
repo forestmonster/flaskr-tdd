@@ -24,7 +24,15 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 
 
-# Create a database.
+@app.route("/")
+def show_entries():
+    """Select all entries from the database, then display them to the user."""
+    db = get_db()
+    cur = db.execute("SELECT * FROM entries ORDER BY id DESC")
+    entries = cur.fetchall()
+    return render_template("index.html", entries=entries)
+
+
 def init_db():
     """Create the database."""
     with app.app_context():
