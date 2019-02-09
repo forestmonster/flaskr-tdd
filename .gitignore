@@ -103,8 +103,9 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# The SQLite3 database
+# The SQLite3 databases
 flaskr.db
+test.db
 
 # Exuberant ctags
 tags
