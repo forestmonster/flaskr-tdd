@@ -83,12 +83,22 @@ class FlaskrTestCase(unittest.TestCase):
         data = json.loads(rv.data)
         self.assertEqual(data["status"], 1)
 
-    def test_search(self):
+    def test_search_empty(self):
         """Ensure the page renders, but the search results in nothing, when nothing's there."""
-        rv = self.app.get('/search/anything')
-        #data = json.loads(rv.data)
+        rv = self.app.get("/search/?query=teststring")
         self.assertEqual(rv.status_code, 200)
-        self.assertNotIn(b"Something", rv.data)
+        self.assertNotIn(b"teststring", rv.data)
+
+    def test_search_works(self):
+        """Create a post, then ensure the search finds it."""
+        self.login(app.config["USERNAME"], app.config["PASSWORD"])
+        rv = self.app.post(
+            "/add", data=dict(title="Hello", text="teststring"), follow_redirects=True
+        )
+        rv = self.app.get("/search/?query=teststring")
+        self.assertEqual(rv.status_code, 200)
+        self.assertIn(b"teststring", rv.data)
+
 
 if __name__ == "__main__":
     unittest.main()
