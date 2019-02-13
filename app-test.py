@@ -32,7 +32,7 @@ class FlaskrTestCase(unittest.TestCase):
         db.create_all()
 
     def tearDown(self):
-        """Destroy blank temp database after each test"""
+        """Drop all tables in temp database after each test"""
         db.drop_all()
 
     def login(self, username, password):
